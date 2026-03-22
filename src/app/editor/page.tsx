@@ -8,6 +8,9 @@ import { BookDetailsDialog } from "@/components/editor/book-details-dialog";
 import { FindReplaceBar } from "@/components/editor/find-replace-bar";
 import { GoalsDialog } from "@/components/editor/goals-dialog";
 import { SnapshotsDialog } from "@/components/editor/snapshots-dialog";
+import { ExportDialog } from "@/components/editor/export-dialog";
+import { CommentsPanel } from "@/components/editor/comments-panel";
+import { KeyboardShortcutsDialog } from "@/components/editor/keyboard-shortcuts-dialog";
 import { useEditorStore } from "@/stores/editor-store";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -29,6 +32,8 @@ import {
   Camera,
   Search,
   Target,
+  MessageCircle,
+  Keyboard,
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -40,6 +45,9 @@ export default function EditorPage() {
   const [findReplaceOpen, setFindReplaceOpen] = useState(false);
   const [goalsOpen, setGoalsOpen] = useState(false);
   const [snapshotsOpen, setSnapshotsOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -50,6 +58,10 @@ export default function EditorPage() {
       }
       if (e.key === "Escape") {
         setFindReplaceOpen(false);
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === "/") {
+        e.preventDefault();
+        setShortcutsOpen((v) => !v);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -118,29 +130,16 @@ export default function EditorPage() {
               <Button variant="ghost" size="icon-sm" className="text-muted-foreground" title="Writing Goals" onClick={() => setGoalsOpen(true)}>
                 <Target className="h-4 w-4" />
               </Button>
+              <Button variant="ghost" size="icon-sm" className={cn("text-muted-foreground", commentsOpen && "bg-muted text-foreground")} title="Comments" onClick={() => setCommentsOpen(!commentsOpen)}>
+                <MessageCircle className="h-4 w-4" />
+              </Button>
               <Separator orientation="vertical" className="h-5 mx-0.5" />
             </>
           )}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs text-muted-foreground">
-                <Download className="h-3.5 w-3.5" />
-                Export
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-44">
-              <DropdownMenuItem>
-                <span className="mr-2">📘</span> Export ePub
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span className="mr-2">📄</span> Export PDF
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <span className="mr-2">📝</span> Export DOCX
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs text-muted-foreground" onClick={() => setExportOpen(true)}>
+            <Download className="h-3.5 w-3.5" />
+            Export
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -154,6 +153,10 @@ export default function EditorPage() {
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setSnapshotsOpen(true)}>
                 <Camera className="h-4 w-4 mr-2" /> Snapshots
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setShortcutsOpen(true)}>
+                <Keyboard className="h-4 w-4 mr-2" /> Keyboard Shortcuts
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive">
@@ -173,6 +176,7 @@ export default function EditorPage() {
               <FindReplaceBar open={findReplaceOpen} onClose={() => setFindReplaceOpen(false)} />
               <EditorArea />
             </div>
+            <CommentsPanel open={commentsOpen} onClose={() => setCommentsOpen(false)} />
           </>
         ) : (
           <FormattingPanel />
@@ -186,6 +190,8 @@ export default function EditorPage() {
       <BookDetailsDialog open={bookDetailsOpen} onOpenChange={setBookDetailsOpen} />
       <GoalsDialog open={goalsOpen} onOpenChange={setGoalsOpen} />
       <SnapshotsDialog open={snapshotsOpen} onOpenChange={setSnapshotsOpen} />
+      <ExportDialog open={exportOpen} onOpenChange={setExportOpen} />
+      <KeyboardShortcutsDialog open={shortcutsOpen} onOpenChange={setShortcutsOpen} />
     </div>
   );
 }
