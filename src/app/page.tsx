@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Upload, FilePlus, LayoutGrid } from "lucide-react";
+import { Upload, FilePlus, LayoutGrid, BarChart3, Palette } from "lucide-react";
 import Link from "next/link";
 import { ImportDocxDialog } from "@/components/books/import-docx-dialog";
 
@@ -24,6 +24,8 @@ export default function Home() {
             <Button variant="ghost" size="sm" className="text-foreground font-medium">Home</Button>
             <Link href="/books"><Button variant="ghost" size="sm" className="text-muted-foreground">My Books</Button></Link>
             <Link href="/collaboration"><Button variant="ghost" size="sm" className="text-muted-foreground">Collaboration</Button></Link>
+            <Link href="/analytics"><Button variant="ghost" size="sm" className="text-muted-foreground">Analytics</Button></Link>
+            <Link href="/themes"><Button variant="ghost" size="sm" className="text-muted-foreground">Themes</Button></Link>
           </nav>
 
           <div className="ml-auto flex items-center gap-2">

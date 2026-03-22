@@ -11,6 +11,7 @@ import { SnapshotsDialog } from "@/components/editor/snapshots-dialog";
 import { ExportDialog } from "@/components/editor/export-dialog";
 import { CommentsPanel } from "@/components/editor/comments-panel";
 import { KeyboardShortcutsDialog } from "@/components/editor/keyboard-shortcuts-dialog";
+import { AiAssistantPanel } from "@/components/editor/ai-assistant-panel";
 import { useEditorStore } from "@/stores/editor-store";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -34,6 +35,7 @@ import {
   Target,
   MessageCircle,
   Keyboard,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -48,6 +50,7 @@ export default function EditorPage() {
   const [exportOpen, setExportOpen] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -133,6 +136,9 @@ export default function EditorPage() {
               <Button variant="ghost" size="icon-sm" className={cn("text-muted-foreground", commentsOpen && "bg-muted text-foreground")} title="Comments" onClick={() => setCommentsOpen(!commentsOpen)}>
                 <MessageCircle className="h-4 w-4" />
               </Button>
+              <Button variant="ghost" size="icon-sm" className={cn("text-muted-foreground", aiOpen && "bg-primary/10 text-primary")} title="AI Assistant" onClick={() => setAiOpen(!aiOpen)}>
+                <Sparkles className="h-4 w-4" />
+              </Button>
               <Separator orientation="vertical" className="h-5 mx-0.5" />
             </>
           )}
@@ -177,6 +183,7 @@ export default function EditorPage() {
               <EditorArea />
             </div>
             <CommentsPanel open={commentsOpen} onClose={() => setCommentsOpen(false)} />
+            <AiAssistantPanel open={aiOpen} onClose={() => setAiOpen(false)} />
           </>
         ) : (
           <FormattingPanel />
