@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { GlobalProviders } from "@/components/providers/global-providers";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -29,7 +30,9 @@ export default function RootLayout({
       <body className={`${inter.variable} min-h-screen bg-background font-sans antialiased`}>
         <ThemeProvider>
           <TooltipProvider delayDuration={300}>
-            {children}
+            <GlobalProviders>
+              {children}
+            </GlobalProviders>
           </TooltipProvider>
         </ThemeProvider>
       </body>

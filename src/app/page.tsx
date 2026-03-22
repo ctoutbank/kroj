@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Upload, FilePlus, LayoutGrid, BarChart3, Palette } from "lucide-react";
 import Link from "next/link";
 import { ImportDocxDialog } from "@/components/books/import-docx-dialog";
+import { NotificationCenter } from "@/components/notification-center";
 
 export default function Home() {
   const [importOpen, setImportOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function Home() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2">
+            <NotificationCenter />
             <Link href="/settings">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted text-xs font-medium cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all">DL</div>
             </Link>
