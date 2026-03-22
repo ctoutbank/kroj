@@ -110,7 +110,7 @@ export default function SignInPage() {
                 <input type="checkbox" className="rounded border-muted-foreground/30" />
                 Remember me
               </label>
-              <a href="#" className="text-xs text-primary hover:underline">Forgot password?</a>
+              <Link href="/auth/forgot-password" className="text-xs text-primary hover:underline">Forgot password?</Link>
             </div>
 
             <Button type="submit" className="w-full h-10 gap-2" disabled={isLoading}>
